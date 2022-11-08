@@ -109,7 +109,10 @@ pwleng.length = prompt("How many characters do you want your password to be?");
           }
   }
 
-document.getElementById("password").innerHTML = pwleng.toString();
+//print password to html field
+function writepw() {
+  document.getElementById("password").innerHTML = pwleng.toString();
+}
 
 
 
@@ -126,4 +129,4 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", writepw);
