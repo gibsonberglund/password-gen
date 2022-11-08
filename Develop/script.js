@@ -109,7 +109,7 @@ pwleng.length = prompt("How many characters do you want your password to be?");
           }
   }
 
-
+document.getElementById("password").innerHTML = pwleng.toString();
 
 
 
