@@ -8,7 +8,7 @@ var charsnumnospec = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345
 var charsnocasenumnospec = 'abcdefghijklmnopqrstuvwxyz0123456789';
 var charsnocasenonumnospec = 'abcdefghijklmnopqrstuvwxyz';
 var charsnocasenonumspec = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()';
-var num = '1234567890';
+var charsnocasenumspec = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()';
 
 //create array that will contain password characters
 var pwleng = [];
@@ -25,17 +25,31 @@ var makepw = function() {
 
 //asks user for other specifications
   } else {
-    var pwcase = prompt("Case sensitive? Answer Y/N");
-      if (pwcase === "y" || "Y"){
+    var pwcase  = prompt("Case sensitive? Answer Y/N");
+    pwcase = pwcase.toLowerCase();
+      if (pwcase === "y"){
         var pwcasenum = prompt("Include numbers? Answer Y/N");
-          if (pwcasenum === "y" || "Y") {
+        pwcasenum = pwcasenum.toLowerCase();
+          if (pwcasenum === "y") {
+
+
+    //selection is yes to case sensitive, numbers, and special characters
             var pwcasenumchar = prompt("Include special characters? Answer Y/N");
-              if (pwcasenumchar === "y" || "Y") {
-          //redirects to password writing function
-                var characterset = charsnocasenonumnospec + num;
-                writepw();
-              } else if (pwcasenumchar === "n" || "N") {
-         //runs a randomizer for each oject in the array - for character set: yes to numbers and case sensitive but no to special characters
+            pwcasenumchar = pwcasenumchar.toLowerCase();
+              if (pwcasenumchar === "y") {
+          //runs a randomizer for each oject in the array - for character set: yes to case sensitive, numbers, and special characters
+                for (var i=0; i < pwleng.length; i++) {
+                pwleng[i] = charsnumspec.charAt(Math.floor(Math.random() * charsnumspec.length));
+                }
+          //creates a string from the array
+                var pwstring = pwleng.join('');
+          //prints the string to the password field
+                document.getElementById("password").innerHTML = pwstring;
+
+
+    //selection is yes to case sensitive and numbers, no special characters      
+              } else if (pwcasenumchar === "n") {
+          //runs a randomizer for each oject in the array - for character set: yes to numbers and case sensitive but no to special characters
                 for (var i=0; i < pwleng.length; i++) {
                   pwleng[i] = charsnumnospec.charAt(Math.floor(Math.random() * charsnumnospec.length));
                 }
@@ -43,15 +57,19 @@ var makepw = function() {
                 var pwstring = pwleng.join('');
           //prints the string to the password field
                 document.getElementById("password").innerHTML = pwstring;
-          
           //invalid input
                 } else {
                 alert("Sorry, that is not a valid answer, please choose Y or N");
+                return;
               } 
-          } else if (pwcasenum === "n" || "N") {
+
+          //user selects yes case sensitive but no numbers
+          } else if (pwcasenum === "n") {
             var pwcasenonumchar = prompt("Include special characters? Answer Y/N")
-              if (pwcasenonumchar === "y" || "Y") {
-          //runs a randomizer for each oject in the array - for character set: no to numbers but yes to case sensitive and special characters
+            pwcasenonumchar = pwcasenonumchar.toLowerCase();
+    //selection is yes case sensitive, no to numbers, yes to special characters
+              if (pwcasenonumchar === "y") {
+          //runs a randomizer for each oject in the array - for character set: yes to case sensitive, no to numbers, yes to special characters
                 for (var i=0; i < pwleng.length; i++) {
                   pwleng[i] = charsnonumspec.charAt(Math.floor(Math.random() * charsnonumspec.length));
                 }
@@ -60,9 +78,9 @@ var makepw = function() {
           //prints the string to the password field
                 document.getElementById("password").innerHTML = pwstring;
 
-
-              } else if (pwcasenonumchar === "n" || "N") {
-          //runs a randomizer for each oject in the array - for character set: no number, yes case sensitive, no special characters
+    //selection is yes case sensitive, no to numbers, no to special characters
+              } else if (pwcasenonumchar === "n") {
+          //runs a randomizer for each oject in the array - for character set: yes case sensitive, no number, no special characters
                 for (var i=0; i < pwleng.length; i++) {
                   pwleng[i] = charsnonumnospec.charAt(Math.floor(Math.random() * charsnonumnospec.length));
                 }
@@ -74,14 +92,20 @@ var makepw = function() {
                 } else {
                 alert("Sorry, that is not a valid answer, please choose Y or N");
               }
+          } else {
+            alert("Sorry, that is not a valid answer, please choose Y or N");
+            return;
           }
 
-
-      } else if (pwcase === "n" || "N") {
+    //user selects not case sensitive
+      } else if (pwcase === "n") {
           var psnocasenum = prompt("Include numbers? Answer Y/N");
-            if (psnocasenum === "y" || "Y") {
+          psnocasenum = psnocasenum.toLowerCase();
+            if (psnocasenum === "y") {
               var psnocasenumchar = prompt("Include special characters? Answer Y/N");
-                if (psnocasenumchar === "y" || "Y") {
+              psnocasenumchar = psnocasenumchar.toLowerCase();
+          //selection is no to case sensitive, yes to numbers, yes to special characters
+                if (psnocasenumchar === "y") {
           //runs a randomizer for each oject in the array - for character set: not case sensitive, yes numbers and special characters
                   for (var i=0; i < pwleng.length; i++) {
                     pwleng[i] = charsnocasenumspec.charAt(Math.floor(Math.random() * charsnocasenumspec.length));
@@ -92,7 +116,7 @@ var makepw = function() {
                   document.getElementById("password").innerHTML = pwstring;
 
 
-                } else if (psnocasenumchar === "n" || "N") {
+                } else if (psnocasenumchar === "n") {
           //runs a randomizer for each oject in the array - for character set: not case sensitive, yes numbers, no special characters
                   for (var i=0; i < pwleng.length; i++) {
                     pwleng[i] = charsnocasenumnospec.charAt(Math.floor(Math.random() * charsnocasenumnospec.length));
@@ -106,10 +130,12 @@ var makepw = function() {
                   alert("Sorry, that is not a valid answer, please choose Y or N");
                 }
 
-
-            } else if (psnocasenum === "n" || "N") {
+    //user selects no to case sensitive and no to numbers
+            } else if (psnocasenum === "n") {
               var psnocasenonumchar = prompt("Include special characters? Answer Y/N");
-                if (psnocasenonumchar === "y" || "Y") {
+              psnocasenonumchar = psnocasenonumchar.toLowerCase();
+    //selection is no to case sensitive, no to numbers, yes to special characters
+                if (psnocasenonumchar === "y") {
           //runs a randomizer for each oject in the array - for character set: not case sentitive, no numbers, yes to special characters
                   for (var i=0; i < pwleng.length; i++) {
                     pwleng[i] = charsnocasenonumspec.charAt(Math.floor(Math.random() * charsnocasenonumspec.length));
@@ -119,8 +145,8 @@ var makepw = function() {
           //prints the string to the password field
                   document.getElementById("password").innerHTML = pwstring;
 
-
-                } else if (psnocasenonumchar === "n" || "N") {
+    //selection is no to case sensitive, no to numbers, no to special characters
+                } else if (psnocasenonumchar === "n") {
           //runs a randomizer for each oject in the array - for character set: not case sentitive, no numbers, and no special characters
                   for (var i=0; i < pwleng.length; i++) {
                     pwleng[i] = charsnocasenonumnospec.charAt(Math.floor(Math.random() * charsnocasenonumnospec.length));
@@ -132,16 +158,19 @@ var makepw = function() {
 
 
                 } else {
-          //invalid input
+          //invalid input for 'special characters
                 alert("Sorry, that is not a valid answer, please choose Y or N");
+                return;
                 }
             } else {
-          //invalid input
+          //invalid input for 'numbers'
               alert("Sorry, that is not a valid answer, please choose Y or N");
+              return;
               }
         } else {
-          //invalid input
+          //invalid input for 'case sensitive'
           alert("Sorry, that is not a valid answer, please choose Y or N");
+          return;
           }
   }
 }
@@ -163,14 +192,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", makepw);
-
-function writepw() {
-//runs a randomizer for each oject in the array - for yes answers to all character types
-for (var i=0; i < pwleng.length; i++) {
-  pwleng[i] = charsnumspec.charAt(Math.floor(Math.random() * characterset.length));
-}
-//creates a string from the array
-var pwstring = pwleng.join('');
-//prints the string to the password field
-document.getElementById("password").innerHTML = pwstring;
-}
